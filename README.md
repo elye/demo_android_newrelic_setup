@@ -1,5 +1,5 @@
 Simple design that follow https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile-android/install-configure/install-android-agent-gradle/ to setup.
-It should work with the need to replace the NEWRELIC-APPKEY in the newrelic.properties and MyApplication.kt and MyApplicationJava.java file.
+It should work with the need to replace the NEWRELIC-APPKEY in the newrelic.properties and MyApplication.kt file.
 
 The App will 
 - Crash to send Unhandled Exception up
