@@ -11,25 +11,26 @@ class MyClass {
 
     private val random = Random(1000)
 
-    fun doSomething(condition: () -> Boolean, message: String) {
+    fun doSomething(crashOut: Boolean, message: String = "Testing NewRelic") {
         val value = random.nextInt()
 
         GlobalScope.launch {
             delay(1000)
-            Log.d("Printing", "Testing $value")
             if (random.nextInt() > 1000) {
-                hiddenInside(condition, message)
+                hiddenInside(crashOut, message)
             }
         }
     }
 
-    private fun hiddenInside(condition: () -> Boolean, message: String) {
-        Log.d("Printing", "Logging to new relic")
-        val result = NewRelic.recordHandledException(Exception("Something beyond"), null)
-        Log.d("Printing", "Handle exception $result")
+    private fun hiddenInside(crashOut: Boolean, message: String) {
         GlobalScope.launch {
+            Log.d("Tracking", "NewRelic Test Action: $crashOut")
             delay(1000)
-            require(condition.invoke()) { message }
+            if (crashOut) {
+                throw Exception(message)
+            } else {
+                NewRelic.recordHandledException(Exception(message), null)
+            }
         }
     }
 }
